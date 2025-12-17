@@ -844,30 +844,192 @@
                 field.appendChild(el);
             });
 
-            // Ball
+            // Ball and trajectory trail
             const ball = document.createElement('div');
             ball.className = 'ball';
+            ball.id = 'gameBall';
             ball.style.left = `${(35 / 120) * 100}%`;
             ball.style.top = `${(26.65 / 53.3) * 100}%`;
+            ball.style.transition = 'all 0.15s ease-out';
             field.appendChild(ball);
 
-            // Animation
+            // Create trajectory line (dashed path showing where ball will go)
+            const trajectoryPath = document.createElement('div');
+            trajectoryPath.id = 'trajectoryPath';
+            trajectoryPath.style.cssText = `
+                position: absolute;
+                left: ${(35 / 120) * 100}%;
+                top: ${(26.65 / 53.3) * 100}%;
+                width: 0;
+                height: 2px;
+                background: linear-gradient(90deg, rgba(255,215,0,0.8), rgba(255,215,0,0.2));
+                transform-origin: left center;
+                z-index: 5;
+                border-radius: 1px;
+                box-shadow: 0 0 10px rgba(255,215,0,0.5);
+            `;
+            field.appendChild(trajectoryPath);
+
+            // Ball trail container
+            const trailContainer = document.createElement('div');
+            trailContainer.id = 'trailContainer';
+            trailContainer.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4;';
+            field.appendChild(trailContainer);
+
+            // Target landing spot
+            const targetSpot = document.createElement('div');
+            targetSpot.id = 'targetSpot';
+            targetSpot.style.cssText = `
+                position: absolute;
+                left: ${(55 / 120) * 100}%;
+                top: ${(10 / 53.3) * 100}%;
+                width: 30px;
+                height: 30px;
+                border: 3px dashed rgba(255,215,0,0.6);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 3;
+                animation: targetPulse 1s infinite;
+                display: none;
+            `;
+            field.appendChild(targetSpot);
+
+            // Add pulse animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes targetPulse {
+                    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+                    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+                }
+                @keyframes ballGlow {
+                    0%, 100% { box-shadow: 0 0 10px rgba(255,215,0,0.8); }
+                    50% { box-shadow: 0 0 20px rgba(255,215,0,1); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Slow motion animation variables
             let frame = 0, playing = false, animId;
+            const totalFrames = 60; // More frames for smoother slow motion
+            const startX = 35, startY = 26.65;
+            const endX = 55, endY = 10;
+            const trailDots = [];
+
             const animate = () => {
                 if (!playing) return;
-                frame = (frame + 1) % 30;
-                const progress = frame / 29;
-                const ballX = 35 + progress * 25;
-                const ballY = 26.65 + (progress < 0.5 ? progress * -20 : (1 - progress) * -20);
+
+                frame++;
+                if (frame > totalFrames) {
+                    playing = false;
+                    document.getElementById('ballStatus').textContent = '🏈 Caught!';
+                    document.getElementById('playBtn').textContent = '▶ Play';
+                    return;
+                }
+
+                const progress = frame / totalFrames;
+
+                // Parabolic arc for realistic ball flight
+                const ballX = startX + progress * (endX - startX);
+                const arcHeight = 15; // Height of arc in yards
+                const ballY = startY + progress * (endY - startY) - Math.sin(progress * Math.PI) * arcHeight;
+
+                // Update ball position with smooth transition
                 ball.style.left = `${(ballX / 120) * 100}%`;
                 ball.style.top = `${(ballY / 53.3) * 100}%`;
-                document.getElementById('frameNum').textContent = frame + 1;
-                document.getElementById('timeVal').textContent = ((frame + 1) * 0.1).toFixed(1) + 's';
-                document.getElementById('ballStatus').textContent = frame < 5 ? 'Pre-Throw' : frame < 25 ? 'In Air' : 'Caught';
-                animId = requestAnimationFrame(animate);
+                ball.style.animation = 'ballGlow 0.5s infinite';
+
+                // Create trail dot every 3 frames
+                if (frame % 3 === 0) {
+                    const dot = document.createElement('div');
+                    dot.style.cssText = `
+                        position: absolute;
+                        left: ${(ballX / 120) * 100}%;
+                        top: ${(ballY / 53.3) * 100}%;
+                        width: 8px;
+                        height: 8px;
+                        background: rgba(255,215,0,${0.8 - progress * 0.6});
+                        border-radius: 50%;
+                        transform: translate(-50%, -50%);
+                        transition: opacity 0.5s;
+                    `;
+                    trailContainer.appendChild(dot);
+                    trailDots.push(dot);
+                }
+
+                // Update stats
+                const timeInSec = (progress * 2).toFixed(1); // 2 second flight
+                document.getElementById('frameNum').textContent = frame;
+                document.getElementById('timeVal').textContent = timeInSec + 's';
+
+                // Update ball status with progress
+                if (progress < 0.1) {
+                    document.getElementById('ballStatus').textContent = '🏈 Release!';
+                } else if (progress < 0.4) {
+                    document.getElementById('ballStatus').textContent = '⬆️ Rising';
+                } else if (progress < 0.7) {
+                    document.getElementById('ballStatus').textContent = '🎯 Peak';
+                } else if (progress < 0.95) {
+                    document.getElementById('ballStatus').textContent = '⬇️ Falling';
+                } else {
+                    document.getElementById('ballStatus').textContent = '🏈 Arriving';
+                }
+
+                // Move players slightly (defenders react)
+                if (frame > 10) {
+                    document.querySelectorAll('.player.defense').forEach((p, i) => {
+                        const currentLeft = parseFloat(p.style.left);
+                        const currentTop = parseFloat(p.style.top);
+                        // Move towards ball landing spot
+                        const targetLeft = (endX / 120) * 100;
+                        const targetTop = (endY / 53.3) * 100;
+                        const moveSpeed = 0.15 + (i * 0.02);
+                        p.style.left = `${currentLeft + (targetLeft - currentLeft) * moveSpeed * 0.1}%`;
+                        p.style.top = `${currentTop + (targetTop - currentTop) * moveSpeed * 0.1}%`;
+                    });
+                }
+
+                // Slow motion: 80ms per frame = 12.5 fps
+                setTimeout(() => animId = requestAnimationFrame(animate), 80);
             };
-            document.getElementById('playBtn').onclick = () => { playing = !playing; if (playing) animate(); };
-            document.getElementById('resetBtn').onclick = () => { playing = false; frame = 0; ball.style.left = `${(35 / 120) * 100}%`; ball.style.top = `${(26.65 / 53.3) * 100}%`; document.getElementById('frameNum').textContent = 1; document.getElementById('timeVal').textContent = '0.0s'; document.getElementById('ballStatus').textContent = 'Pre-Throw'; };
+
+            const resetAnimation = () => {
+                playing = false;
+                frame = 0;
+                ball.style.left = `${(startX / 120) * 100}%`;
+                ball.style.top = `${(startY / 53.3) * 100}%`;
+                ball.style.animation = 'none';
+                targetSpot.style.display = 'none';
+                trailContainer.innerHTML = '';
+                trailDots.length = 0;
+                document.getElementById('frameNum').textContent = '0';
+                document.getElementById('timeVal').textContent = '0.0s';
+                document.getElementById('ballStatus').textContent = 'Ready';
+                document.getElementById('playBtn').textContent = '▶ Play';
+
+                // Reset player positions
+                players.forEach((p, i) => {
+                    const el = document.querySelectorAll('.player')[i];
+                    if (el) {
+                        el.style.left = `${(p.x / 120) * 100}%`;
+                        el.style.top = `${(p.y / 53.3) * 100}%`;
+                    }
+                });
+            };
+
+            document.getElementById('playBtn').onclick = () => {
+                if (playing) {
+                    playing = false;
+                    document.getElementById('playBtn').textContent = '▶ Play';
+                } else {
+                    if (frame >= totalFrames) resetAnimation();
+                    playing = true;
+                    targetSpot.style.display = 'block';
+                    document.getElementById('playBtn').textContent = '⏸ Pause';
+                    animate();
+                }
+            };
+            document.getElementById('resetBtn').onclick = resetAnimation;
+
 
             // Charts
             const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } } } };
