@@ -602,261 +602,262 @@
                         <button class="btn" id="playBtn">▶ Play</button>
                         <button class="btn" id="resetBtn">↺ Reset</button>
                     </div>
-                    <!-- Help Text -->
+                </div>
+                <!-- Help Text -->
+                <div
+                    style="background: linear-gradient(90deg, rgba(0,168,255,0.1), rgba(0,255,136,0.1)); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem;">
+                    <span style="font-size: 1.2rem;">💡</span>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
+                        <strong style="color: var(--accent-1);">How to use:</strong> Click <strong>▶ Play</strong> to
+                        watch the ball trajectory. <strong>Click any player</strong> to see their RAI score. Blue =
+                        Offense, Red = Defense.
+                    </p>
+                </div>
+                <!-- Field Container -->
+                <div class="field-container" id="field">
+                    <div class="endzone left">ENDZONE</div>
+                    <div class="endzone right">ENDZONE</div>
+                    <!-- Legend inside field -->
                     <div
-                        style="background: linear-gradient(90deg, rgba(0,168,255,0.1), rgba(0,255,136,0.1)); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem;">
-                        <span style="font-size: 1.2rem;">💡</span>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
-                            <strong style="color: var(--accent-1);">How to use:</strong> Click <strong>▶ Play</strong>
-                            to watch the ball trajectory. <strong>Click any player</strong> to see their RAI score. Blue
-                            = Offense, Red = Defense.
-                        </p>
+                        style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); padding: 8px 12px; border-radius: 8px; font-size: 11px; z-index: 20;">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="width: 12px; height: 12px; background: #3b82f6; border-radius: 50%;"></span>
+                            <span>Offense</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                            <span style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></span>
+                            <span>Defense</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 12px; height: 8px; background: #FFD700; border-radius: 2px;"></span>
+                            <span>Football</span>
+                        </div>
                     </div>
-                    <div class="field-container" id="field">
-                        <div class="endzone left">ENDZONE</div>
-                        <div class="endzone right">ENDZONE</div>
-                        <!-- Legend -->
+                </div>
+                <!-- Stats Row -->
+                <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                    <div class="stat-card" style="flex: 1; min-width: 100px;">
+                        <div class="stat-label">Frame</div>
+                        <div class="stat-value" id="frameNum">0</div>
+                    </div>
+                    <div class="stat-card" style="flex: 1; min-width: 100px;">
+                        <div class="stat-label">Time</div>
+                        <div class="stat-value" id="timeVal">0.0s</div>
+                    </div>
+                    <div class="stat-card" style="flex: 1; min-width: 100px;">
+                        <div class="stat-label">Ball Status</div>
+                        <div class="stat-value" style="font-size: 1rem;" id="ballStatus">Ready</div>
+                    </div>
+                    <div class="stat-card" style="flex: 1; min-width: 100px;">
+                        <div class="stat-label">Selected Player</div>
+                        <div class="stat-value" style="font-size: 1rem;" id="selectedPlayer">None</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- RAI Components -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">RAI Component Breakdown</h2>
+                </div>
+                <table class="rai-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Value</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>RTD</strong> - Reaction Time Delay</td>
+                            <td>2.5 frames</td>
+                            <td>
+                                <div class="rai-bar">
+                                    <div class="rai-bar-fill good" style="width: 85%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>TE</strong> - Trajectory Efficiency</td>
+                            <td>0.956</td>
+                            <td>
+                                <div class="rai-bar">
+                                    <div class="rai-bar-fill good" style="width: 95%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>BPQ</strong> - Break Point Quality</td>
+                            <td>0.78</td>
+                            <td>
+                                <div class="rai-bar">
+                                    <div class="rai-bar-fill good" style="width: 78%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>CMS</strong> - Coverage Maintenance</td>
+                            <td>0.65</td>
+                            <td>
+                                <div class="rai-bar">
+                                    <div class="rai-bar-fill good" style="width: 65%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>SD</strong> - Separation Delta</td>
+                            <td>+1.8 yds</td>
+                            <td>
+                                <div class="rai-bar">
+                                    <div class="rai-bar-fill good" style="width: 72%"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-top: 1.5rem;">
+                    <div class="panel-title" style="margin-bottom: 1rem;">Composite RAI Score</div>
+                    <div style="text-align: center;">
                         <div
-                            style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); padding: 8px 12px; border-radius: 8px; font-size: 11px; z-index: 20;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-                                <span
-                                    style="width: 12px; height: 12px; background: #3b82f6; border-radius: 50%;"></span>
-                                <span>Offense</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-                                <span
-                                    style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></span>
-                                <span>Defense</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 12px; height: 8px; background: #FFD700; border-radius: 2px;"></span>
-                                <span>Football</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
-                        <div class="stat-card" style="flex: 1; min-width: 120px;">
-                            <div class="stat-label">Frame</div>
-                            <div class="stat-value" id="frameNum">1</div>
-                        </div>
-
-                        <div class="stat-card" style="flex: 1; min-width: 120px;">
-                            <div class="stat-label">Time</div>
-                            <div class="stat-value" id="timeVal">0.0s</div>
-                        </div>
-                        <div class="stat-card" style="flex: 1; min-width: 120px;">
-                            <div class="stat-label">Ball Status</div>
-                            <div class="stat-value" style="font-size: 1rem;" id="ballStatus">Pre-Throw</div>
-                        </div>
-                        <div class="stat-card" style="flex: 1; min-width: 120px;">
-                            <div class="stat-label">Selected Player</div>
-                            <div class="stat-value" style="font-size: 1rem;" id="selectedPlayer">None</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RAI Components -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">RAI Component Breakdown</h2>
-                    </div>
-                    <table class="rai-table">
-                        <thead>
-                            <tr>
-                                <th>Component</th>
-                                <th>Value</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>RTD</strong> - Reaction Time Delay</td>
-                                <td>2.5 frames</td>
-                                <td>
-                                    <div class="rai-bar">
-                                        <div class="rai-bar-fill good" style="width: 85%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>TE</strong> - Trajectory Efficiency</td>
-                                <td>0.956</td>
-                                <td>
-                                    <div class="rai-bar">
-                                        <div class="rai-bar-fill good" style="width: 95%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>BPQ</strong> - Break Point Quality</td>
-                                <td>0.78</td>
-                                <td>
-                                    <div class="rai-bar">
-                                        <div class="rai-bar-fill good" style="width: 78%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>CMS</strong> - Coverage Maintenance</td>
-                                <td>0.65</td>
-                                <td>
-                                    <div class="rai-bar">
-                                        <div class="rai-bar-fill good" style="width: 65%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>SD</strong> - Separation Delta</td>
-                                <td>+1.8 yds</td>
-                                <td>
-                                    <div class="rai-bar">
-                                        <div class="rai-bar-fill good" style="width: 72%"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div style="margin-top: 1.5rem;">
-                        <div class="panel-title" style="margin-bottom: 1rem;">Composite RAI Score</div>
-                        <div style="text-align: center;">
-                            <div
-                                style="font-size: 4rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                0.814</div>
-                            <div style="color: var(--accent-1); font-weight: 600;">Above Average Reactivity</div>
-                        </div>
+                            style="font-size: 4rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            0.814</div>
+                        <div style="color: var(--accent-1); font-weight: 600;">Above Average Reactivity</div>
                     </div>
                 </div>
             </div>
-
-            <!-- Charts Row -->
-            <div class="main-grid three-col">
-                <!-- RAI by Role -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">RAI by Player Role</h2>
-                    </div>
-                    <div class="chart-container"><canvas id="roleChart"></canvas></div>
-                </div>
-                <!-- Coverage Comparison -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">Coverage Scheme Analysis</h2>
-                    </div>
-                    <div class="chart-container"><canvas id="coverageChart"></canvas></div>
-                </div>
-                <!-- Time Evolution -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">Reaction Over Time</h2>
-                    </div>
-                    <div class="chart-container"><canvas id="timeChart"></canvas></div>
-                </div>
-            </div>
-
-            <!-- Leaderboard and Matrix -->
-            <div class="main-grid">
-                <!-- Top Performers -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">🏆 Top RAI Performers</h2>
-                    </div>
-                    <div id="leaderboard"></div>
-                </div>
-                <!-- Insights -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h2 class="panel-title">💡 Key Insights</h2>
-                    </div>
-                    <div class="insights-grid">
-                        <div class="insight-card">
-                            <h4>🚀 Elite DBs React 2-3 Frames Faster</h4>
-                            <p>Top defensive backs show RTD of 2.8 frames vs 5.1 for league average, gaining ~0.8
-                                yards
-                                closure.</p>
-                        </div>
-                        <div class="insight-card">
-                            <h4>📊 Cover 3 Shows 40% More Variance</h4>
-                            <p>Zone coverages have higher RAI variance on deep routes compared to Cover 2.</p>
-                        </div>
-                        <div class="insight-card">
-                            <h4>⚡ Elite WRs Maintain 95% Speed</h4>
-                            <p>Top receivers preserve speed through route breaks while average drops to 78%.</p>
-                        </div>
-                        <div class="insight-card">
-                            <h4>📈 RAI Predicts Completion</h4>
-                            <p>Composite RAI correlates with completion probability at r² = 0.35.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Route Effectiveness Matrix -->
-            <div class="main-grid">
-                <div class="panel full-width">
-                    <div class="panel-header">
-                        <h2 class="panel-title">Route vs Coverage Effectiveness Matrix</h2>
-                    </div>
-                    <div id="matrixContainer" style="overflow-x: auto;"></div>
-                </div>
-            </div>
-
-            <footer class="footer">
-                <p>NFL Big Data Bowl 2026 | Reactivity Advantage Index (RAI) Analysis</p>
-                <p style="margin-top: 0.5rem; opacity: 0.6;">Built with Python, Pandas, Chart.js & ❤️</p>
-            </footer>
         </div>
 
-        <script>
-            // Initialize Field
-            const field = document.getElementById('field');
-            for (let i = 1; i <= 10; i++) {
-                const line = document.createElement('div');
-                line.className = 'yard-line';
-                line.style.left = `${8.33 + (i * 8.33)}%`;
-                field.appendChild(line);
-            }
+        <!-- Charts Row -->
+        <div class="main-grid three-col">
+            <!-- RAI by Role -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">RAI by Player Role</h2>
+                </div>
+                <div class="chart-container"><canvas id="roleChart"></canvas></div>
+            </div>
+            <!-- Coverage Comparison -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Coverage Scheme Analysis</h2>
+                </div>
+                <div class="chart-container"><canvas id="coverageChart"></canvas></div>
+            </div>
+            <!-- Time Evolution -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Reaction Over Time</h2>
+                </div>
+                <div class="chart-container"><canvas id="timeChart"></canvas></div>
+            </div>
+        </div>
 
-            // Players Data
-            const players = [
-                { id: 'QB', x: 35, y: 26.65, side: 'offense', name: 'Quarterback', rai: 0.52 },
-                { id: 'RB', x: 32, y: 28, side: 'offense', name: 'Running Back', rai: 0.61 },
-                { id: 'WR', x: 35, y: 5, side: 'offense', name: 'Wide Receiver', rai: 0.78 },
-                { id: 'WR', x: 35, y: 48, side: 'offense', name: 'Wide Receiver', rai: 0.71 },
-                { id: 'TE', x: 35, y: 18, side: 'offense', name: 'Tight End', rai: 0.55 },
-                { id: 'CB', x: 38, y: 5, side: 'defense', name: 'Cornerback', rai: 0.82 },
-                { id: 'CB', x: 38, y: 48, side: 'defense', name: 'Cornerback', rai: 0.69 },
-                { id: 'S', x: 50, y: 15, side: 'defense', name: 'Safety', rai: 0.91 },
-                { id: 'S', x: 50, y: 38, side: 'defense', name: 'Safety', rai: 0.77 },
-                { id: 'LB', x: 42, y: 26.65, side: 'defense', name: 'Linebacker', rai: 0.63 },
-            ];
+        <!-- Leaderboard and Matrix -->
+        <div class="main-grid">
+            <!-- Top Performers -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">🏆 Top RAI Performers</h2>
+                </div>
+                <div id="leaderboard"></div>
+            </div>
+            <!-- Insights -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">💡 Key Insights</h2>
+                </div>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h4>🚀 Elite DBs React 2-3 Frames Faster</h4>
+                        <p>Top defensive backs show RTD of 2.8 frames vs 5.1 for league average, gaining ~0.8
+                            yards
+                            closure.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>📊 Cover 3 Shows 40% More Variance</h4>
+                        <p>Zone coverages have higher RAI variance on deep routes compared to Cover 2.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>⚡ Elite WRs Maintain 95% Speed</h4>
+                        <p>Top receivers preserve speed through route breaks while average drops to 78%.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h4>📈 RAI Predicts Completion</h4>
+                        <p>Composite RAI correlates with completion probability at r² = 0.35.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            players.forEach((p, i) => {
-                const el = document.createElement('div');
-                el.className = `player ${p.side}`;
-                el.style.left = `${(p.x / 120) * 100}%`;
-                el.style.top = `${(p.y / 53.3) * 100}%`;
-                el.textContent = p.id;
-                el.onclick = () => {
-                    document.querySelectorAll('.player').forEach(pl => pl.classList.remove('selected'));
-                    el.classList.add('selected');
-                    document.getElementById('selectedPlayer').textContent = `${p.name} (${p.rai.toFixed(2)})`;
-                };
-                field.appendChild(el);
-            });
+        <!-- Route Effectiveness Matrix -->
+        <div class="main-grid">
+            <div class="panel full-width">
+                <div class="panel-header">
+                    <h2 class="panel-title">Route vs Coverage Effectiveness Matrix</h2>
+                </div>
+                <div id="matrixContainer" style="overflow-x: auto;"></div>
+            </div>
+        </div>
 
-            // Ball and trajectory trail
-            const ball = document.createElement('div');
-            ball.className = 'ball';
-            ball.id = 'gameBall';
-            ball.style.left = `${(35 / 120) * 100}%`;
-            ball.style.top = `${(26.65 / 53.3) * 100}%`;
-            ball.style.transition = 'all 0.15s ease-out';
-            field.appendChild(ball);
+        <footer class="footer">
+            <p>NFL Big Data Bowl 2026 | Reactivity Advantage Index (RAI) Analysis</p>
+            <p style="margin-top: 0.5rem; opacity: 0.6;">Built with Python, Pandas, Chart.js & ❤️</p>
+        </footer>
+    </div>
 
-            // Create trajectory line (dashed path showing where ball will go)
-            const trajectoryPath = document.createElement('div');
-            trajectoryPath.id = 'trajectoryPath';
-            trajectoryPath.style.cssText = `
+    <script>
+        // Initialize Field
+        const field = document.getElementById('field');
+        for (let i = 1; i <= 10; i++) {
+            const line = document.createElement('div');
+            line.className = 'yard-line';
+            line.style.left = `${8.33 + (i * 8.33)}%`;
+            field.appendChild(line);
+        }
+
+        // Players Data
+        const players = [
+            { id: 'QB', x: 35, y: 26.65, side: 'offense', name: 'Quarterback', rai: 0.52 },
+            { id: 'RB', x: 32, y: 28, side: 'offense', name: 'Running Back', rai: 0.61 },
+            { id: 'WR', x: 35, y: 5, side: 'offense', name: 'Wide Receiver', rai: 0.78 },
+            { id: 'WR', x: 35, y: 48, side: 'offense', name: 'Wide Receiver', rai: 0.71 },
+            { id: 'TE', x: 35, y: 18, side: 'offense', name: 'Tight End', rai: 0.55 },
+            { id: 'CB', x: 38, y: 5, side: 'defense', name: 'Cornerback', rai: 0.82 },
+            { id: 'CB', x: 38, y: 48, side: 'defense', name: 'Cornerback', rai: 0.69 },
+            { id: 'S', x: 50, y: 15, side: 'defense', name: 'Safety', rai: 0.91 },
+            { id: 'S', x: 50, y: 38, side: 'defense', name: 'Safety', rai: 0.77 },
+            { id: 'LB', x: 42, y: 26.65, side: 'defense', name: 'Linebacker', rai: 0.63 },
+        ];
+
+        players.forEach((p, i) => {
+            const el = document.createElement('div');
+            el.className = `player ${p.side}`;
+            el.style.left = `${(p.x / 120) * 100}%`;
+            el.style.top = `${(p.y / 53.3) * 100}%`;
+            el.textContent = p.id;
+            el.onclick = () => {
+                document.querySelectorAll('.player').forEach(pl => pl.classList.remove('selected'));
+                el.classList.add('selected');
+                document.getElementById('selectedPlayer').textContent = `${p.name} (${p.rai.toFixed(2)})`;
+            };
+            field.appendChild(el);
+        });
+
+        // Ball and trajectory trail
+        const ball = document.createElement('div');
+        ball.className = 'ball';
+        ball.id = 'gameBall';
+        ball.style.left = `${(35 / 120) * 100}%`;
+        ball.style.top = `${(26.65 / 53.3) * 100}%`;
+        ball.style.transition = 'all 0.15s ease-out';
+        field.appendChild(ball);
+
+        // Create trajectory line (dashed path showing where ball will go)
+        const trajectoryPath = document.createElement('div');
+        trajectoryPath.id = 'trajectoryPath';
+        trajectoryPath.style.cssText = `
                 position: absolute;
                 left: ${(35 / 120) * 100}%;
                 top: ${(26.65 / 53.3) * 100}%;
@@ -868,18 +869,18 @@
                 border-radius: 1px;
                 box-shadow: 0 0 10px rgba(255,215,0,0.5);
             `;
-            field.appendChild(trajectoryPath);
+        field.appendChild(trajectoryPath);
 
-            // Ball trail container
-            const trailContainer = document.createElement('div');
-            trailContainer.id = 'trailContainer';
-            trailContainer.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4;';
-            field.appendChild(trailContainer);
+        // Ball trail container
+        const trailContainer = document.createElement('div');
+        trailContainer.id = 'trailContainer';
+        trailContainer.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4;';
+        field.appendChild(trailContainer);
 
-            // Target landing spot
-            const targetSpot = document.createElement('div');
-            targetSpot.id = 'targetSpot';
-            targetSpot.style.cssText = `
+        // Target landing spot
+        const targetSpot = document.createElement('div');
+        targetSpot.id = 'targetSpot';
+        targetSpot.style.cssText = `
                 position: absolute;
                 left: ${(55 / 120) * 100}%;
                 top: ${(10 / 53.3) * 100}%;
@@ -892,11 +893,11 @@
                 animation: targetPulse 1s infinite;
                 display: none;
             `;
-            field.appendChild(targetSpot);
+        field.appendChild(targetSpot);
 
-            // Add pulse animation
-            const style = document.createElement('style');
-            style.textContent = `
+        // Add pulse animation
+        const style = document.createElement('style');
+        style.textContent = `
                 @keyframes targetPulse {
                     0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
                     50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
@@ -906,42 +907,42 @@
                     50% { box-shadow: 0 0 20px rgba(255,215,0,1); }
                 }
             `;
-            document.head.appendChild(style);
+        document.head.appendChild(style);
 
-            // Slow motion animation variables
-            let frame = 0, playing = false, animId;
-            const totalFrames = 60; // More frames for smoother slow motion
-            const startX = 35, startY = 26.65;
-            const endX = 55, endY = 10;
-            const trailDots = [];
+        // Slow motion animation variables
+        let frame = 0, playing = false, animId;
+        const totalFrames = 60; // More frames for smoother slow motion
+        const startX = 35, startY = 26.65;
+        const endX = 55, endY = 10;
+        const trailDots = [];
 
-            const animate = () => {
-                if (!playing) return;
+        const animate = () => {
+            if (!playing) return;
 
-                frame++;
-                if (frame > totalFrames) {
-                    playing = false;
-                    document.getElementById('ballStatus').textContent = '🏈 Caught!';
-                    document.getElementById('playBtn').textContent = '▶ Play';
-                    return;
-                }
+            frame++;
+            if (frame > totalFrames) {
+                playing = false;
+                document.getElementById('ballStatus').textContent = '🏈 Caught!';
+                document.getElementById('playBtn').textContent = '▶ Play';
+                return;
+            }
 
-                const progress = frame / totalFrames;
+            const progress = frame / totalFrames;
 
-                // Parabolic arc for realistic ball flight
-                const ballX = startX + progress * (endX - startX);
-                const arcHeight = 15; // Height of arc in yards
-                const ballY = startY + progress * (endY - startY) - Math.sin(progress * Math.PI) * arcHeight;
+            // Parabolic arc for realistic ball flight
+            const ballX = startX + progress * (endX - startX);
+            const arcHeight = 15; // Height of arc in yards
+            const ballY = startY + progress * (endY - startY) - Math.sin(progress * Math.PI) * arcHeight;
 
-                // Update ball position with smooth transition
-                ball.style.left = `${(ballX / 120) * 100}%`;
-                ball.style.top = `${(ballY / 53.3) * 100}%`;
-                ball.style.animation = 'ballGlow 0.5s infinite';
+            // Update ball position with smooth transition
+            ball.style.left = `${(ballX / 120) * 100}%`;
+            ball.style.top = `${(ballY / 53.3) * 100}%`;
+            ball.style.animation = 'ballGlow 0.5s infinite';
 
-                // Create trail dot every 3 frames
-                if (frame % 3 === 0) {
-                    const dot = document.createElement('div');
-                    dot.style.cssText = `
+            // Create trail dot every 3 frames
+            if (frame % 3 === 0) {
+                const dot = document.createElement('div');
+                dot.style.cssText = `
                         position: absolute;
                         left: ${(ballX / 120) * 100}%;
                         top: ${(ballY / 53.3) * 100}%;
@@ -952,115 +953,115 @@
                         transform: translate(-50%, -50%);
                         transition: opacity 0.5s;
                     `;
-                    trailContainer.appendChild(dot);
-                    trailDots.push(dot);
-                }
+                trailContainer.appendChild(dot);
+                trailDots.push(dot);
+            }
 
-                // Update stats
-                const timeInSec = (progress * 2).toFixed(1); // 2 second flight
-                document.getElementById('frameNum').textContent = frame;
-                document.getElementById('timeVal').textContent = timeInSec + 's';
+            // Update stats
+            const timeInSec = (progress * 2).toFixed(1); // 2 second flight
+            document.getElementById('frameNum').textContent = frame;
+            document.getElementById('timeVal').textContent = timeInSec + 's';
 
-                // Update ball status with progress
-                if (progress < 0.1) {
-                    document.getElementById('ballStatus').textContent = '🏈 Release!';
-                } else if (progress < 0.4) {
-                    document.getElementById('ballStatus').textContent = '⬆️ Rising';
-                } else if (progress < 0.7) {
-                    document.getElementById('ballStatus').textContent = '🎯 Peak';
-                } else if (progress < 0.95) {
-                    document.getElementById('ballStatus').textContent = '⬇️ Falling';
-                } else {
-                    document.getElementById('ballStatus').textContent = '🏈 Arriving';
-                }
+            // Update ball status with progress
+            if (progress < 0.1) {
+                document.getElementById('ballStatus').textContent = '🏈 Release!';
+            } else if (progress < 0.4) {
+                document.getElementById('ballStatus').textContent = '⬆️ Rising';
+            } else if (progress < 0.7) {
+                document.getElementById('ballStatus').textContent = '🎯 Peak';
+            } else if (progress < 0.95) {
+                document.getElementById('ballStatus').textContent = '⬇️ Falling';
+            } else {
+                document.getElementById('ballStatus').textContent = '🏈 Arriving';
+            }
 
-                // Move players slightly (defenders react)
-                if (frame > 10) {
-                    document.querySelectorAll('.player.defense').forEach((p, i) => {
-                        const currentLeft = parseFloat(p.style.left);
-                        const currentTop = parseFloat(p.style.top);
-                        // Move towards ball landing spot
-                        const targetLeft = (endX / 120) * 100;
-                        const targetTop = (endY / 53.3) * 100;
-                        const moveSpeed = 0.15 + (i * 0.02);
-                        p.style.left = `${currentLeft + (targetLeft - currentLeft) * moveSpeed * 0.1}%`;
-                        p.style.top = `${currentTop + (targetTop - currentTop) * moveSpeed * 0.1}%`;
-                    });
-                }
-
-                // Slow motion: 80ms per frame = 12.5 fps
-                setTimeout(() => animId = requestAnimationFrame(animate), 80);
-            };
-
-            const resetAnimation = () => {
-                playing = false;
-                frame = 0;
-                ball.style.left = `${(startX / 120) * 100}%`;
-                ball.style.top = `${(startY / 53.3) * 100}%`;
-                ball.style.animation = 'none';
-                targetSpot.style.display = 'none';
-                trailContainer.innerHTML = '';
-                trailDots.length = 0;
-                document.getElementById('frameNum').textContent = '0';
-                document.getElementById('timeVal').textContent = '0.0s';
-                document.getElementById('ballStatus').textContent = 'Ready';
-                document.getElementById('playBtn').textContent = '▶ Play';
-
-                // Reset player positions
-                players.forEach((p, i) => {
-                    const el = document.querySelectorAll('.player')[i];
-                    if (el) {
-                        el.style.left = `${(p.x / 120) * 100}%`;
-                        el.style.top = `${(p.y / 53.3) * 100}%`;
-                    }
+            // Move players slightly (defenders react)
+            if (frame > 10) {
+                document.querySelectorAll('.player.defense').forEach((p, i) => {
+                    const currentLeft = parseFloat(p.style.left);
+                    const currentTop = parseFloat(p.style.top);
+                    // Move towards ball landing spot
+                    const targetLeft = (endX / 120) * 100;
+                    const targetTop = (endY / 53.3) * 100;
+                    const moveSpeed = 0.15 + (i * 0.02);
+                    p.style.left = `${currentLeft + (targetLeft - currentLeft) * moveSpeed * 0.1}%`;
+                    p.style.top = `${currentTop + (targetTop - currentTop) * moveSpeed * 0.1}%`;
                 });
-            };
+            }
 
-            document.getElementById('playBtn').onclick = () => {
-                if (playing) {
-                    playing = false;
-                    document.getElementById('playBtn').textContent = '▶ Play';
-                } else {
-                    if (frame >= totalFrames) resetAnimation();
-                    playing = true;
-                    targetSpot.style.display = 'block';
-                    document.getElementById('playBtn').textContent = '⏸ Pause';
-                    animate();
+            // Slow motion: 80ms per frame = 12.5 fps
+            setTimeout(() => animId = requestAnimationFrame(animate), 80);
+        };
+
+        const resetAnimation = () => {
+            playing = false;
+            frame = 0;
+            ball.style.left = `${(startX / 120) * 100}%`;
+            ball.style.top = `${(startY / 53.3) * 100}%`;
+            ball.style.animation = 'none';
+            targetSpot.style.display = 'none';
+            trailContainer.innerHTML = '';
+            trailDots.length = 0;
+            document.getElementById('frameNum').textContent = '0';
+            document.getElementById('timeVal').textContent = '0.0s';
+            document.getElementById('ballStatus').textContent = 'Ready';
+            document.getElementById('playBtn').textContent = '▶ Play';
+
+            // Reset player positions
+            players.forEach((p, i) => {
+                const el = document.querySelectorAll('.player')[i];
+                if (el) {
+                    el.style.left = `${(p.x / 120) * 100}%`;
+                    el.style.top = `${(p.y / 53.3) * 100}%`;
                 }
-            };
-            document.getElementById('resetBtn').onclick = resetAnimation;
-
-
-            // Charts
-            const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } } } };
-
-            new Chart(document.getElementById('roleChart'), {
-                type: 'bar',
-                data: { labels: ['Defensive Coverage', 'Targeted Receiver', 'Pass Route', 'Pass Rush', 'Pass Block'], datasets: [{ label: 'Avg RAI', data: [0.555, 0.523, 0.48, 0.61, 0.42], backgroundColor: ['#00ff88', '#00a8ff', '#ff6b35', '#a855f7', '#f59e0b'] }] },
-                options: { ...chartOptions, indexAxis: 'y' }
             });
+        };
 
-            new Chart(document.getElementById('coverageChart'), {
-                type: 'radar',
-                data: { labels: ['Cover 1', 'Cover 2', 'Cover 3', 'Cover 4', 'Man', 'Blitz'], datasets: [{ label: 'Defender RAI', data: [0.62, 0.71, 0.55, 0.68, 0.58, 0.49], borderColor: '#00ff88', backgroundColor: 'rgba(0,255,136,0.2)' }, { label: 'Receiver RAI', data: [0.51, 0.48, 0.67, 0.52, 0.72, 0.81], borderColor: '#00a8ff', backgroundColor: 'rgba(0,168,255,0.2)' }] },
-                options: { ...chartOptions, scales: { r: { angleLines: { color: 'rgba(255,255,255,0.1)' }, grid: { color: 'rgba(255,255,255,0.1)' }, pointLabels: { color: '#94a3b8' }, ticks: { display: false } } } }
-            });
+        document.getElementById('playBtn').onclick = () => {
+            if (playing) {
+                playing = false;
+                document.getElementById('playBtn').textContent = '▶ Play';
+            } else {
+                if (frame >= totalFrames) resetAnimation();
+                playing = true;
+                targetSpot.style.display = 'block';
+                document.getElementById('playBtn').textContent = '⏸ Pause';
+                animate();
+            }
+        };
+        document.getElementById('resetBtn').onclick = resetAnimation;
 
-            new Chart(document.getElementById('timeChart'), {
-                type: 'line',
-                data: { labels: ['0ms', '100ms', '200ms', '300ms', '400ms', '500ms', '600ms', '700ms', '800ms'], datasets: [{ label: 'Defender Jerk', data: [0, 2, 8, 15, 12, 8, 5, 3, 2], borderColor: '#ef4444', fill: false, tension: 0.4 }, { label: 'Receiver Jerk', data: [0, 5, 12, 18, 14, 9, 6, 4, 3], borderColor: '#3b82f6', fill: false, tension: 0.4 }] },
-                options: chartOptions
-            });
 
-            // Leaderboard
-            const topPlayers = [
-                { name: 'NFL ID 52637', role: 'Defensive Coverage', rai: 1.128 },
-                { name: 'NFL ID 56368', role: 'Targeted Receiver', rai: 1.128 },
-                { name: 'NFL ID 55918', role: 'Defensive Coverage', rai: 1.127 },
-                { name: 'NFL ID 52563', role: 'Defensive Coverage', rai: 1.118 },
-                { name: 'NFL ID 53490', role: 'Defensive Coverage', rai: 1.116 },
-            ];
-            document.getElementById('leaderboard').innerHTML = topPlayers.map((p, i) => `
+        // Charts
+        const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } }, scales: { x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } } } };
+
+        new Chart(document.getElementById('roleChart'), {
+            type: 'bar',
+            data: { labels: ['Defensive Coverage', 'Targeted Receiver', 'Pass Route', 'Pass Rush', 'Pass Block'], datasets: [{ label: 'Avg RAI', data: [0.555, 0.523, 0.48, 0.61, 0.42], backgroundColor: ['#00ff88', '#00a8ff', '#ff6b35', '#a855f7', '#f59e0b'] }] },
+            options: { ...chartOptions, indexAxis: 'y' }
+        });
+
+        new Chart(document.getElementById('coverageChart'), {
+            type: 'radar',
+            data: { labels: ['Cover 1', 'Cover 2', 'Cover 3', 'Cover 4', 'Man', 'Blitz'], datasets: [{ label: 'Defender RAI', data: [0.62, 0.71, 0.55, 0.68, 0.58, 0.49], borderColor: '#00ff88', backgroundColor: 'rgba(0,255,136,0.2)' }, { label: 'Receiver RAI', data: [0.51, 0.48, 0.67, 0.52, 0.72, 0.81], borderColor: '#00a8ff', backgroundColor: 'rgba(0,168,255,0.2)' }] },
+            options: { ...chartOptions, scales: { r: { angleLines: { color: 'rgba(255,255,255,0.1)' }, grid: { color: 'rgba(255,255,255,0.1)' }, pointLabels: { color: '#94a3b8' }, ticks: { display: false } } } }
+        });
+
+        new Chart(document.getElementById('timeChart'), {
+            type: 'line',
+            data: { labels: ['0ms', '100ms', '200ms', '300ms', '400ms', '500ms', '600ms', '700ms', '800ms'], datasets: [{ label: 'Defender Jerk', data: [0, 2, 8, 15, 12, 8, 5, 3, 2], borderColor: '#ef4444', fill: false, tension: 0.4 }, { label: 'Receiver Jerk', data: [0, 5, 12, 18, 14, 9, 6, 4, 3], borderColor: '#3b82f6', fill: false, tension: 0.4 }] },
+            options: chartOptions
+        });
+
+        // Leaderboard
+        const topPlayers = [
+            { name: 'NFL ID 52637', role: 'Defensive Coverage', rai: 1.128 },
+            { name: 'NFL ID 56368', role: 'Targeted Receiver', rai: 1.128 },
+            { name: 'NFL ID 55918', role: 'Defensive Coverage', rai: 1.127 },
+            { name: 'NFL ID 52563', role: 'Defensive Coverage', rai: 1.118 },
+            { name: 'NFL ID 53490', role: 'Defensive Coverage', rai: 1.116 },
+        ];
+        document.getElementById('leaderboard').innerHTML = topPlayers.map((p, i) => `
             <div class="leaderboard-item">
                 <div class="rank ${i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal'}">${i + 1}</div>
                 <div class="player-info"><div class="player-name">${p.name}</div><div class="player-role">${p.role}</div></div>
@@ -1068,13 +1069,13 @@
             </div>
         `).join('');
 
-            // Matrix
-            const routes = ['Slant', 'Post', 'Go', 'Out', 'Curl', 'Dig'];
-            const coverages = ['Cover 1', 'Cover 2', 'Cover 3', 'Cover 4', 'Man', 'Blitz'];
-            const matrixData = [[0.72, 0.68, 0.55, 0.61, 0.48, 0.82], [0.58, 0.52, 0.71, 0.65, 0.61, 0.75], [0.45, 0.61, 0.68, 0.72, 0.55, 0.69], [0.65, 0.71, 0.58, 0.52, 0.68, 0.61], [0.61, 0.58, 0.52, 0.68, 0.72, 0.55], [0.55, 0.65, 0.61, 0.58, 0.52, 0.78]];
-            const getColor = (v) => v > 0.7 ? '#00ff88' : v > 0.55 ? '#fbbf24' : '#ef4444';
-            document.getElementById('matrixContainer').innerHTML = `<table class="rai-table"><thead><tr><th></th>${coverages.map(c => `<th style="text-align:center">${c}</th>`).join('')}</tr></thead><tbody>${routes.map((r, i) => `<tr><td><strong>${r}</strong></td>${matrixData[i].map(v => `<td style="text-align:center;background:${getColor(v)}22;color:${getColor(v)};font-weight:600">${v.toFixed(2)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-        </script>
+        // Matrix
+        const routes = ['Slant', 'Post', 'Go', 'Out', 'Curl', 'Dig'];
+        const coverages = ['Cover 1', 'Cover 2', 'Cover 3', 'Cover 4', 'Man', 'Blitz'];
+        const matrixData = [[0.72, 0.68, 0.55, 0.61, 0.48, 0.82], [0.58, 0.52, 0.71, 0.65, 0.61, 0.75], [0.45, 0.61, 0.68, 0.72, 0.55, 0.69], [0.65, 0.71, 0.58, 0.52, 0.68, 0.61], [0.61, 0.58, 0.52, 0.68, 0.72, 0.55], [0.55, 0.65, 0.61, 0.58, 0.52, 0.78]];
+        const getColor = (v) => v > 0.7 ? '#00ff88' : v > 0.55 ? '#fbbf24' : '#ef4444';
+        document.getElementById('matrixContainer').innerHTML = `<table class="rai-table"><thead><tr><th></th>${coverages.map(c => `<th style="text-align:center">${c}</th>`).join('')}</tr></thead><tbody>${routes.map((r, i) => `<tr><td><strong>${r}</strong></td>${matrixData[i].map(v => `<td style="text-align:center;background:${getColor(v)}22;color:${getColor(v)};font-weight:600">${v.toFixed(2)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    </script>
 </body>
 
 </html>
