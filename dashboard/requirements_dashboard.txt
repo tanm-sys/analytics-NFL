@@ -1,0 +1,21 @@
+# NFL RAI Interactive Dashboard Dependencies
+# Latest versions as of December 2024
+
+# Core framework
+streamlit>=1.41.0
+
+# Visualization
+plotly>=5.24.0
+kaleido>=0.2.1
+
+# Enhanced components
+streamlit-extras>=0.5.0
+streamlit-option-menu>=0.4.0
+
+# Data processing (fast loading)
+pandas>=2.0.0
+numpy>=1.24.0
+polars>=1.0.0
+
+# Performance optimization
+plotly-resampler>=0.10.0
