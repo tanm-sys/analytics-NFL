@@ -12,7 +12,7 @@
 
 ### 1. Install Dependencies
 ```bash
-cd /home/osama/Downloads/analytics-NFL
+cd /home/tanmay/Downloads/analytics-NFL
 pip install -r requirements.txt
 ```
 
